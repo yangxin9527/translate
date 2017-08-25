@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+i am a fool !!!
+<br>
+中文哈哈
+<br>
+123456
+    <script src="./dist/jquery.min.js"></script>
+    <script src="./dist/md5.js"></script>
+    <script>
+//config 
+// APP ID：20170825000076986
+// 密钥：JIxEYXJqTtFJnLS0QyfM
+
+
+        $(function () {
+            const baiduAppid = "20170825000076986";
+            const baiduSign = "JIxEYXJqTtFJnLS0QyfM";
+            $("body").mouseup(function (e) {
+                let text = window.getSelection();
+                let salt = Math.round(Math.random()*1000);
+                let sign = hex_md5(baiduAppid+text+salt+baiduSign);
+                let param = "from=en&to=zh&appid="+baiduAppid+"&salt="+salt+"&sign="+sign+"&q="+text;
+              
+                if (text != "") {
+                    $.ajax({
+                        type:"post",
+                        url:"http://api.fanyi.baidu.com/api/trans/vip/translate",
+                        dataType:"json",
+                        data:param,
+                        success:function(data){
+                            console.log("success:"+data);
+                            console.log("success:"+data.trans_result[0].dst);
+                
+                        },
+                        error:function(error){
+                        console.log("error:"+error)    
+                        },
+                    })
+                }
+            }).mousedown(function () {
+                console.log("鼠标按下")
+            });
+        });
+
+    </script>

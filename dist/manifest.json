@@ -1,0 +1,24 @@
+{
+    "manifest_version": 2,
+  
+    "name": "测试demo",
+    "description": "This extension shows a Google Image search result for the current page",
+    "version": "1.0",
+  
+    "browser_action": {
+      "default_icon": "icon.png",
+      "default_popup": "popup.html"
+    },
+    "permissions": [
+      "activeTab",
+      "https://ajax.googleapis.com/",
+      "http://api.fanyi.baidu.com/"
+    ],
+    "content_scripts": [
+        {
+          "matches": ["http://127.0.0.1/*"],
+          "css": ["test.css"],
+          "js": ["jquery.min.js","md5.js","test.js"]
+        }
+      ]
+  }

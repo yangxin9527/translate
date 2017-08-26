@@ -12,7 +12,8 @@
     "permissions": [
       "activeTab",
       "https://ajax.googleapis.com/",
-      "http://api.fanyi.baidu.com/"
+      "http://api.fanyi.baidu.com/",
+      "http://openapi.youdao.com/api"
     ],
     "content_scripts": [
         {

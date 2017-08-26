@@ -20,31 +20,74 @@
 
 'use strict'
 $(function () {
-    const baiduAppid = "20170825000076986";
-    const baiduSign = "JIxEYXJqTtFJnLS0QyfM";
+    init();
     $("body").mouseup(function (e) {
-        let text = window.getSelection();
-        let salt = Math.round(Math.random()*1000);
-        let sign = hex_md5(baiduAppid+text+salt+baiduSign);
-        let param = "from=en&to=zh&appid="+baiduAppid+"&salt="+salt+"&sign="+sign+"&q="+text;
-      
+        let text = window.getSelection().toString();
         if (text != "") {
-            $.ajax({
-                type:"post",
-                url:"http://api.fanyi.baidu.com/api/trans/vip/translate",
-                dataType:"json",
-                data:param,
-                success:function(data){
-                    console.log("success:"+data);
-                   alert("success:"+data.trans_result[0].dst);
-        
-                },
-                error:function(error){
-                console.log("error:"+error)    
-                },
-            })
+            translateSearch(text,e);
         }
     }).mousedown(function () {
-        console.log("鼠标按下")
+        if($(".translate-box")){
+            $(".translate-box").remove();
+        }
+        
     });
 });
+function init() {
+    
+}
+function locationBox(e) {
+    $(".translate-box").css({
+        top: e.pageY + 5 + "px",
+        left: e.pageX + 5 + "px"
+    }).show();
+}
+function translateSearch(text,e) {
+    // youdao翻译
+    var youdaoConfig={
+        url:"http://openapi.youdao.com/api",
+        appKey:"0a2974b71ca222c7",
+        secretKey:"AIjDPQIao6sg79gSjZHlgbo3KX4M6bNF"
+    };
+
+    let salt = Math.round(Math.random()*1000);
+    let sign = hex_md5(youdaoConfig.appKey+text+salt+youdaoConfig.secretKey);
+    let param = "from=auto&to=auto&appKey="+youdaoConfig.appKey+"&salt="+salt+"&sign="+sign+"&q="+encodeURIComponent(text);
+    $.ajax({
+        type: "POST",
+        url: youdaoConfig.url,
+        dataType: "json",
+        data: param,
+        success: function (data) {
+            if(data.errorCode ==0){
+                var $div = $("<div>").addClass("translate-box");
+                $div.append($("<div>").addClass("title").html(data.query));
+
+                if(data.basic){
+                    $div.append($("<span>").addClass("uk-phonetic").html("[英]"+data.basic['uk-phonetic']));
+                    $div.append($("<span>").addClass("us-phonetic").html("[美]"+data.basic['us-phonetic']));
+             
+                            
+                    var str = "";
+                    for(let i=0,len=data.basic.explains.length;i<len;i++){
+                        str +="<li><span>"+
+                                data.basic.explains[i]
+                            +"</span></li>"
+                    }
+                    $div.append($("<ul>").addClass("comment").html(str));
+                }else if(data.translation){
+                    var $div = $("<div>").addClass("translate-box");
+                    $div.append($("<div>").addClass("sentence-translation").html(data.translation));
+            
+                }
+                $("body").append($div);
+                locationBox(e);
+            }
+        },
+        error: function (error) {
+            console.log("error")
+        },
+    })
+}
+
+

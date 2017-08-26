@@ -6,51 +6,154 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./dist/test.css">
 </head>
 
 <body>
-
-i am a fool !!!
-<br>
-中文哈哈
-<br>
-123456
+            <!-- <div class="translate-box">
+                <span class="colse">close</span>
+                <div class="title"></div>
+                <div class="content">
+                    <div class="pronunciation">
+                        [英]<span class="uk-phonetic"></span>
+                        [美]<span class="us-phonetic"></span>
+                    </div>
+                        <ul class="comment"><li></li></ul>
+                </div>
+                <div class="word-translation"></div>
+                <div class="sentence-translation"></div>
+            </div> -->
+     
+    <div class="container">
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img data-src="holder.js/100%x200" alt="100%x200" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMzE5IiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMxOSAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzEwMCV4MjAwCkNyZWF0ZWQgd2l0aCBIb2xkZXIuanMgMi42LjAuCkxlYXJuIG1vcmUgYXQgaHR0cDovL2hvbGRlcmpzLmNvbQooYykgMjAxMi0yMDE1IEl2YW4gTWFsb3BpbnNreSAtIGh0dHA6Ly9pbXNreS5jbwotLT48ZGVmcz48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwhW0NEQVRBWyNob2xkZXJfMTVlMWM2N2M3ODIgdGV4dCB7IGZpbGw6I0FBQUFBQTtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxNnB0IH0gXV0+PC9zdHlsZT48L2RlZnM+PGcgaWQ9ImhvbGRlcl8xNWUxYzY3Yzc4MiI+PHJlY3Qgd2lkdGg9IjMxOSIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNFRUVFRUUiLz48Zz48dGV4dCB4PSIxMTcuOTg0Mzc1IiB5PSIxMDcuMiI+MzE5eDIwMDwvdGV4dD48L2c+PC9nPjwvc3ZnPg=="
+                    data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">
+                <div class="caption">
+                    <h3>Thumbnail label</h3>
+                    <p>Learn more about hiring developers or posting ads with us.</p>
+                    <p>Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.</p>
+                    <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    i am a fool !!!
+    <br> 中文哈哈
+    <br> 123456
     <script src="./dist/jquery.min.js"></script>
     <script src="./dist/md5.js"></script>
     <script>
-//config 
-// APP ID：20170825000076986
-// 密钥：JIxEYXJqTtFJnLS0QyfM
-
-
         $(function () {
-            const baiduAppid = "20170825000076986";
-            const baiduSign = "JIxEYXJqTtFJnLS0QyfM";
+            init();
             $("body").mouseup(function (e) {
-                let text = window.getSelection();
-                let salt = Math.round(Math.random()*1000);
-                let sign = hex_md5(baiduAppid+text+salt+baiduSign);
-                let param = "from=en&to=zh&appid="+baiduAppid+"&salt="+salt+"&sign="+sign+"&q="+text;
-              
+                let text = window.getSelection().toString();
                 if (text != "") {
-                    $.ajax({
-                        type:"post",
-                        url:"http://api.fanyi.baidu.com/api/trans/vip/translate",
-                        dataType:"json",
-                        data:param,
-                        success:function(data){
-                            console.log("success:"+data);
-                            console.log("success:"+data.trans_result[0].dst);
-                
-                        },
-                        error:function(error){
-                        console.log("error:"+error)    
-                        },
-                    })
+                    translateSearch(text,e);
                 }
             }).mousedown(function () {
-                console.log("鼠标按下")
+                if($(".translate-box")){
+                    $(".translate-box").remove();
+                }
+                
             });
         });
+        function init() {
+            
+        }
+        function locationBox(e) {
+            $(".translate-box").css({
+                top: e.pageY + 5 + "px",
+                left: e.pageX + 5 + "px"
+            }).show();
+        }
+        function translateSearch(text,e) {
+            // youdao翻译
+            var youdaoConfig={
+                url:"http://openapi.youdao.com/api",
+                appKey:"0a2974b71ca222c7",
+                secretKey:"AIjDPQIao6sg79gSjZHlgbo3KX4M6bNF"
+            };
 
+            let salt = Math.round(Math.random()*1000);
+            let sign = hex_md5(youdaoConfig.appKey+text+salt+youdaoConfig.secretKey);
+            let param = "from=auto&to=auto&appKey="+youdaoConfig.appKey+"&salt="+salt+"&sign="+sign+"&q="+encodeURIComponent(text);
+            $.ajax({
+                type: "POST",
+                url: youdaoConfig.url,
+                dataType: "json",
+                data: param,
+                success: function (data) {
+                    if(data.errorCode ==0){
+                        var $div = $("<div>").addClass("translate-box");
+                        $div.append($("<div>").addClass("title").html(data.query));
+
+                        if(data.basic){
+                            $div.append($("<span>").addClass("uk-phonetic").html("[英]"+data.basic['uk-phonetic']));
+                            $div.append($("<span>").addClass("us-phonetic").html("[美]"+data.basic['us-phonetic']));
+                     
+                                    
+                            var str = "";
+                            for(let i=0,len=data.basic.explains.length;i<len;i++){
+                                str +="<li><span>"+
+                                        data.basic.explains[i]
+                                    +"</span></li>"
+                            }
+                            $div.append($("<ul>").addClass("comment").html(str));
+                        }else if(data.translation){
+                            var $div = $("<div>").addClass("translate-box");
+                            $div.append($("<div>").addClass("sentence-translation").html(data.translation));
+                    
+                        }
+                        $("body").append($div);
+                        locationBox(e);
+                    }
+                   
+                    
+                },
+                error: function (error) {
+                    console.log("error")
+                },
+            })
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+         // 百度翻译
+            // const baiduAppid = "20170825000076986";
+            // const baiduSign = "JIxEYXJqTtFJnLS0QyfM";
+            // let text = window.getSelection();
+            // let salt = Math.round(Math.random()*1000);
+            // let sign = hex_md5(baiduAppid+text+salt+baiduSign);
+            // let param = "from=en&to=zh&appid="+baiduAppid+"&salt="+salt+"&sign="+sign+"&q="+text;
+
+            // if (text != "") {
+            //     $.ajax({
+            //         type:"post",
+            //         url:"http://api.fanyi.baidu.com/api/trans/vip/translate",
+            //         dataType:"json",
+            //         data:param,
+            //         success:function(data){
+            //             console.log("success:"+data);
+            //             console.log("success:"+data.trans_result[0].dst);
+            //         },
+            //         error:function(error){
+            //         console.log("error:"+error)    
+            //         },
+            //     })
+            // }
     </script>
+
+
+
+

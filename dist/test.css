@@ -1,43 +1,32 @@
-
-.translate-btn{
-    display: none;
-    width:25px;
-    height: 25px;
-    background: #FFF url("./search.jpg") no-repeat center center;
-    background-size: 20px 20px; 
-    border: 1px solid #dddddd;
-    border-radius: 3px;
-    position: absolute;
-    top:0;
-    left:0;
+body{
+    position: relative;
 }
-
 .translate-box{
+    display: none;
     min-width: 200px;
     max-width: 450px;
+    max-height:300px;
     padding: 5px 10px;
     background: #fff;
     border: 1px solid #dddddd;
     border-radius: 3px;
     position: absolute;
-    top:30px;
-    left:0;
     font-size: 14px;
     color:#333;
     z-index: 10000;
 }
-.colse{
-    position: absolute;
-    top: -20px;
-    right:0px;
+
+.collect{
+    float: right;
+    margin-top: 5px;
     color: #fff;
-    background: #999;
+    background: #BFE686;
     padding: 0 10px;
-    border-radius: 7px 5px 0px 0px;
-}
-.colse:hover{
-    background:  #E42525;
     cursor:pointer;
+}
+.collect:hover{
+    background:  #ff6000;
+    color: #d9edf7;
 }
 .title{
     padding: 2px 0;

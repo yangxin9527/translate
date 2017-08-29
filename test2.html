@@ -25,6 +25,29 @@
                 <div class="sentence-translation"></div>
             </div> -->
      
+    <h1>Learn more about hiring developers or posting ads with us.
+        
+        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with us.
+        
+        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with us.
+        
+        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with us.
+        
+        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with us.
+        
+        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with us.
+        
+        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with us.
+        
+        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with us.
+        
+        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with us.
+        
+        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with us.
+        
+        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with us.
+        
+        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.</h1>
     <div class="container">
         <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
@@ -56,20 +79,64 @@
                 if($(".translate-box")){
                     $(".translate-box").remove();
                 }
-                
             });
+            
+            $("body").on("mouseup",".translate-box",function(event){
+                event.stopPropagation();
+            }).on("mousedown",".translate-box",function(event){
+                event.stopPropagation();
+            })
+            $("body").on("mouseup",".collect",function(event){
+                event.stopPropagation();
+            }).on("mousedown",".collect",function(event){
+                event.stopPropagation();
+                console.log("收藏");
+                setTimeout(function(){
+                    $(".translate-box").remove();
+                },0)
+            })
         });
         function init() {
             
         }
         function locationBox(e) {
-            $(".translate-box").css({
-                top: e.pageY + 5 + "px",
-                left: e.pageX + 5 + "px"
-            }).show();
+            var boxConfig = {
+                width:450,
+                height:300
+            }
+            var browser ={
+                width: document.body.clientWidth,
+                height:document.body.clientHeight
+            }
+            let boxEle = $(".translate-box");
+            if(e.pageY + boxConfig.height<browser.height){
+                boxEle.css({
+                    top: e.pageY + "px"
+                })
+            }else{
+                boxEle.css({
+                    bottom: 0
+                })
+            }
+            
+            if(e.pageX + boxConfig.width<browser.width){
+                boxEle.css({
+                    left: e.pageX + "px"
+                })
+            }else{
+                boxEle.css({
+                    right: 0
+                })
+            }
+            boxEle.show();
         }
+
         function translateSearch(text,e) {
             // youdao翻译
+            if(text.length>300){
+                alert("最大翻译字符长度为300");
+                return false;
+            }
             var youdaoConfig={
                 url:"http://openapi.youdao.com/api",
                 appKey:"0a2974b71ca222c7",
@@ -87,9 +154,9 @@
                 success: function (data) {
                     if(data.errorCode ==0){
                         var $div = $("<div>").addClass("translate-box");
-                        $div.append($("<div>").addClass("title").html(data.query));
-
+                            $div.append($("<span>").addClass("collect").html("collect"));
                         if(data.basic){
+                            $div.append($("<div>").addClass("title").html(data.query));
                             $div.append($("<span>").addClass("uk-phonetic").html("[英]"+data.basic['uk-phonetic']));
                             $div.append($("<span>").addClass("us-phonetic").html("[美]"+data.basic['us-phonetic']));
                      
@@ -102,7 +169,6 @@
                             }
                             $div.append($("<ul>").addClass("comment").html(str));
                         }else if(data.translation){
-                            var $div = $("<div>").addClass("translate-box");
                             $div.append($("<div>").addClass("sentence-translation").html(data.translation));
                     
                         }
@@ -116,6 +182,7 @@
                     console.log("error")
                 },
             })
+
         }
 
 

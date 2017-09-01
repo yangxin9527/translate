@@ -11,7 +11,7 @@
 </head>
 
 <body>
-            <!-- <div class="translate-box">
+    <!-- <div class="translate-box">
                 <span class="colse">close</span>
                 <div class="title"></div>
                 <div class="content">
@@ -24,30 +24,24 @@
                 <div class="word-translation"></div>
                 <div class="sentence-translation"></div>
             </div> -->
-     
-    <h1>Learn more about hiring developers or posting ads with us.
-        
-        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with us.
-        
-        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with us.
-        
-        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with us.
-        
-        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with us.
-        
-        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with us.
-        
-        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with us.
-        
-        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with us.
-        
-        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with us.
-        
-        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with us.
-        
-        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with us.
-        
-        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.</h1>
+
+    <h1>Learn more about hiring developers or posting ads with us. Google's free service instantly translates words, phrases,
+        and web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with
+        us. Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn
+        more about hiring developers or posting ads with us. Google's free service instantly translates words, phrases, and
+        web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with us.
+        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn
+        more about hiring developers or posting ads with us. Google's free service instantly translates words, phrases, and
+        web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with us.
+        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn
+        more about hiring developers or posting ads with us. Google's free service instantly translates words, phrases, and
+        web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with us.
+        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn
+        more about hiring developers or posting ads with us. Google's free service instantly translates words, phrases, and
+        web pages between English and over 100 other languages.Learn more about hiring developers or posting ads with us.
+        Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.Learn
+        more about hiring developers or posting ads with us. Google's free service instantly translates words, phrases, and
+        web pages between English and over 100 other languages.</h1>
     <div class="container">
         <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
@@ -56,7 +50,8 @@
                 <div class="caption">
                     <h3>Thumbnail label</h3>
                     <p>Learn more about hiring developers or posting ads with us.</p>
-                    <p>Google's free service instantly translates words, phrases, and web pages between English and over 100 other languages.</p>
+                    <p>Google's free service instantly translates words, phrases, and web pages between English and over 100
+                        other languages.</p>
                     <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
                 </div>
             </div>
@@ -68,159 +63,134 @@
     <script src="./dist/jquery.min.js"></script>
     <script src="./dist/md5.js"></script>
     <script>
-        $(function () {
-            init();
-            $("body").mouseup(function (e) {
-                let text = window.getSelection().toString();
-                if (text != "") {
-                    translateSearch(text,e);
-                }
-            }).mousedown(function () {
-                if($(".translate-box")){
-                    $(".translate-box").remove();
-                }
-            });
-            
-            $("body").on("mouseup",".translate-box",function(event){
-                event.stopPropagation();
-            }).on("mousedown",".translate-box",function(event){
-                event.stopPropagation();
-            })
-            $("body").on("mouseup",".collect",function(event){
-                event.stopPropagation();
-            }).on("mousedown",".collect",function(event){
-                event.stopPropagation();
-                console.log("收藏");
-                setTimeout(function(){
-                    $(".translate-box").remove();
-                },0)
-            })
-        });
-        function init() {
-            
-        }
-        function locationBox(e) {
-            var boxConfig = {
-                width:450,
-                height:300
-            }
-            var browser ={
-                width: document.body.clientWidth,
-                height:document.body.clientHeight
-            }
-            let boxEle = $(".translate-box");
-            if(e.pageY + boxConfig.height<browser.height){
-                boxEle.css({
-                    top: e.pageY + "px"
-                })
-            }else{
-                boxEle.css({
-                    bottom: 0
-                })
-            }
-            
-            if(e.pageX + boxConfig.width<browser.width){
-                boxEle.css({
-                    left: e.pageX + "px"
-                })
-            }else{
-                boxEle.css({
-                    right: 0
-                })
-            }
-            boxEle.show();
-        }
-
-        function translateSearch(text,e) {
-            // youdao翻译
-            if(text.length>300){
-                alert("最大翻译字符长度为300");
-                return false;
-            }
-            var youdaoConfig={
-                url:"http://openapi.youdao.com/api",
-                appKey:"0a2974b71ca222c7",
-                secretKey:"AIjDPQIao6sg79gSjZHlgbo3KX4M6bNF"
-            };
-
-            let salt = Math.round(Math.random()*1000);
-            let sign = hex_md5(youdaoConfig.appKey+text+salt+youdaoConfig.secretKey);
-            let param = "from=auto&to=auto&appKey="+youdaoConfig.appKey+"&salt="+salt+"&sign="+sign+"&q="+encodeURIComponent(text);
-            $.ajax({
-                type: "POST",
-                url: youdaoConfig.url,
-                dataType: "json",
-                data: param,
-                success: function (data) {
-                    if(data.errorCode ==0){
-                        var $div = $("<div>").addClass("translate-box");
-                            $div.append($("<span>").addClass("collect").html("collect"));
-                        if(data.basic){
-                            $div.append($("<div>").addClass("title").html(data.query));
-                            $div.append($("<span>").addClass("uk-phonetic").html("[英]"+data.basic['uk-phonetic']));
-                            $div.append($("<span>").addClass("us-phonetic").html("[美]"+data.basic['us-phonetic']));
-                     
-                                    
-                            var str = "";
-                            for(let i=0,len=data.basic.explains.length;i<len;i++){
-                                str +="<li><span>"+
-                                        data.basic.explains[i]
-                                    +"</span></li>"
-                            }
-                            $div.append($("<ul>").addClass("comment").html(str));
-                        }else if(data.translation){
-                            $div.append($("<div>").addClass("sentence-translation").html(data.translation));
-                    
-                        }
-                        $("body").append($div);
-                        locationBox(e);
+        var myTrans;
+        if (!myTrans) {
+            myTrans = {
+                isOpen: true,
+                locationBox: function (e) {
+                    var boxConfig = {
+                        width: 450,
+                        height: 300
                     }
-                   
-                    
-                },
-                error: function (error) {
-                    console.log("error")
-                },
-            })
+                    var browser = {
+                        width: document.body.clientWidth,
+                        height: document.body.clientHeight
+                    }
+                    let boxEle = $(".translate-box");
+                    if (e.pageY + boxConfig.height < browser.height) {
+                        boxEle.css({
+                            top: e.pageY + "px"
+                        })
+                    } else {
+                        boxEle.css({
+                            bottom: 0
+                        })
+                    }
 
+                    if (e.pageX + boxConfig.width < browser.width) {
+                        boxEle.css({
+                            left: e.pageX + "px"
+                        })
+                    } else {
+                        boxEle.css({
+                            right: 0
+                        })
+                    }
+                    boxEle.show();
+                },
+                translateSearch: function (text, e) {
+                    // youdao翻译
+                    if (text.length > 300) {
+                        alert("最大翻译字符长度为300");
+                        return false;
+                    }
+                    var youdaoConfig = {
+                        url: "http://openapi.youdao.com/api",
+                        appKey: "0a2974b71ca222c7",
+                        secretKey: "AIjDPQIao6sg79gSjZHlgbo3KX4M6bNF"
+                    };
+
+                    let salt = Math.round(Math.random() * 1000);
+                    let sign = hex_md5(youdaoConfig.appKey + text + salt + youdaoConfig.secretKey);
+                    let param = "from=auto&to=auto&appKey=" + youdaoConfig.appKey + "&salt=" + salt + "&sign=" + sign + "&q=" + encodeURIComponent(text);
+                    $.ajax({
+                        type: "POST",
+                        url: youdaoConfig.url,
+                        dataType: "json",
+                        data: param,
+                        success: function (data) {
+                            if (data.errorCode == 0) {
+                                var $div = $("<div>").addClass("translate-box");
+                                $div.append($("<span>").addClass("collect").html("collect"));
+                                if (data.basic) {
+                                    $div.append($("<div>").addClass("title").html(data.query));
+                                    $div.append($("<span>").addClass("uk-phonetic").html("[英]" + data.basic['uk-phonetic']));
+                                    $div.append($("<span>").addClass("us-phonetic").html("[美]" + data.basic['us-phonetic']));
+
+
+                                    var str = "";
+                                    for (let i = 0, len = data.basic.explains.length; i < len; i++) {
+                                        str += "<li><span>" +
+                                            data.basic.explains[i]
+                                            + "</span></li>"
+                                    }
+                                    $div.append($("<ul>").addClass("comment").html(str));
+                                } else if (data.translation) {
+                                    $div.append($("<div>").addClass("sentence-translation").html(data.translation));
+
+                                }
+                                $("body").append($div);
+                                myTrans.locationBox(e);
+                            }
+                        },
+                        error: function (error) {
+                            console.log("error")
+                        },
+                    })
+
+                }
+            }
+            $(function () {
+                $("body").mouseup(function (e) {
+                    if (!myTrans.isOpen) {
+                        return false;
+                    }
+                    let text = window.getSelection().toString();
+                    if (text != "") {
+                        myTrans.translateSearch(text, e);
+                    }
+                }).mousedown(function () {
+                    if ($(".translate-box")) {
+                        $(".translate-box").remove();
+                    }
+                });
+
+                $("body").on("mouseup", ".translate-box", function (event) {
+                    event.stopPropagation();
+                }).on("mousedown", ".translate-box", function (event) {
+                    event.stopPropagation();
+                })
+                $("body").on("mouseup", ".collect", function (event) {
+                    event.stopPropagation();
+                }).on("mousedown", ".collect", function (event) {
+                    event.stopPropagation();
+                    console.log("收藏");
+                    setTimeout(function () {
+                        $(".translate-box").remove();
+                    }, 0)
+                })
+            });
+            document.onkeydown = function () {
+                var oEvent = window.event;
+                if (oEvent.keyCode == 84 && oEvent.altKey) {
+                    // alert("你按下了alt+t");  
+                    myTrans.isOpen = !myTrans.isOpen;
+                    if ($(".translate-box"))
+                        $(".translate-box").remove();
+                }
+            }
+
+        }else{
+            console.log("翻译插件加载失败。全局有myTrans变量，为了不和你浏览网站产生冲突，故不加载插件。若你仍想加载翻译插件，请在右上角 ")
         }
-
-
-
-
-
-
-
-
-
-
-
-
-         // 百度翻译
-            // const baiduAppid = "20170825000076986";
-            // const baiduSign = "JIxEYXJqTtFJnLS0QyfM";
-            // let text = window.getSelection();
-            // let salt = Math.round(Math.random()*1000);
-            // let sign = hex_md5(baiduAppid+text+salt+baiduSign);
-            // let param = "from=en&to=zh&appid="+baiduAppid+"&salt="+salt+"&sign="+sign+"&q="+text;
-
-            // if (text != "") {
-            //     $.ajax({
-            //         type:"post",
-            //         url:"http://api.fanyi.baidu.com/api/trans/vip/translate",
-            //         dataType:"json",
-            //         data:param,
-            //         success:function(data){
-            //             console.log("success:"+data);
-            //             console.log("success:"+data.trans_result[0].dst);
-            //         },
-            //         error:function(error){
-            //         console.log("error:"+error)    
-            //         },
-            //     })
-            // }
     </script>
-
-
-
-

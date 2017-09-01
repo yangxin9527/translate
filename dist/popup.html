@@ -5,8 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        body{
+            width: 300px;
+            height:400px;
+            overflow: auto;
+        }
+        #tableExcel thead, #tableExcel tr {
+        border-top-width: 1px;
+        border-top-style: solid;
+        border-top-color: rgb(211, 202, 221);
+        }
+        #tableExcel {
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: rgb(211, 202, 221);
+        }
+        #tableExcel td, #tableExcel th {
+        padding: 5px 10px;
+        font-size: 12px;
+        font-family: Verdana;
+        color: rgb(95, 74, 121);
+        }
+        #tableExcel tr:nth-child(even) {
+        background: rgb(223, 216, 232)
+        }
+        #tableExcel tr:nth-child(odd) {
+        background: #FFF
+        }
+    </style>
 </head>
 <body>
-   <a href="./background.html">查看生词本</a>
+        <button type="button" id="export">导出Excel</button>  
+        <input type="text" id="inputBtn">
+        <div id="myDiv">  
+                <table id="tableExcel" width="100%" border="1" cellspacing="0" cellpadding="0">  
+                    <thead>  
+                        <td colspan="3" align="center">生词表</td>  
+                    </thead>
+                  
+                    <tr title="09-01 16:41">  
+                            <td>单词</td>  
+                            <td>发音</td>  
+                            <td>释义</td>   
+                              
+                    </tr>  
+                    <tr >  
+                        <td>fool</td>  
+                        <td>fo l</td>  
+                        <td>傻瓜</td>  
+                    </tr>  
+                    
+                </table>  
+                </div> 
+   <script src="./popup.js"></script>
 </body>
 </html>

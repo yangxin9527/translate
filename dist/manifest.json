@@ -11,13 +11,26 @@
     },
     "permissions": [
       "activeTab",
-      "https://ajax.googleapis.com/",
-      "http://api.fanyi.baidu.com/",
-      "http://openapi.youdao.com/api"
+      "cookies",
+      "contextMenus",
+      // "https://ajax.googleapis.com/",
+      // "http://api.fanyi.baidu.com/",
+      // "http://openapi.youdao.com/api",
+      // "http://127.0.0.1/",
+      "http://*/",
+      "https://*/"
     ],
+    "background":{
+      "page":"background.htm"
+    },
+    "icons":{
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    },
     "content_scripts": [
         {
-          "matches": ["http://127.0.0.1/*"],
+          "matches": ["http://127.0.0.1/*","http://*/*","https://*/*"],
           "css": ["test.css"],
           "js": ["jquery.min.js","md5.js","test.js"]
         }

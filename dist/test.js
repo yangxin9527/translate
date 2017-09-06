@@ -55,6 +55,9 @@ if (!myTrans) {
             boxEle.show();
         },
         translateSearch: function (text, e) {
+            chrome.extension.sendRequest({greeting: "hello"}, function(response) {
+                console.log(response);
+              });
             // youdao翻译
             if (text.length > 300) {
                 alert("最大翻译字符长度为300");

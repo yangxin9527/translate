@@ -22,7 +22,15 @@
 var myTrans;
 if (!myTrans) {
     myTrans = {
-        isOpen: true,
+        isOpen: 2,
+        changeOpen:function(type){
+            chrome.extension.sendRequest({isOpen: myTrans.isOpen,type:type?type:""}, function(response) {
+                if(!response.code){
+                    myTrans.isOpen = response.isOpen;
+                }
+              });
+              return myTrans.isOpen;
+        },
         locationBox: function (e) {
             var boxConfig = {
                 width: 450,
@@ -55,9 +63,6 @@ if (!myTrans) {
             boxEle.show();
         },
         translateSearch: function (text, e) {
-            chrome.extension.sendRequest({greeting: "hello"}, function(response) {
-                console.log(response);
-              });
             // youdao翻译
             if (text.length > 300) {
                 alert("最大翻译字符长度为300");
@@ -148,7 +153,7 @@ if (!myTrans) {
     }
     $(function () {
         $("body").mouseup(function (e) {
-            if (!myTrans.isOpen) {
+            if (myTrans.changeOpen() !=1) {
                 return false;
             }
             let text = window.getSelection().toString();
@@ -185,8 +190,7 @@ if (!myTrans) {
     document.onkeydown = function () {
         var oEvent = window.event;
         if (oEvent.keyCode == 84 && oEvent.altKey) {
-            // alert("你按下了alt+t");  
-            myTrans.isOpen = !myTrans.isOpen;
+            myTrans.changeOpen("change");
             if ($(".translate-box"))
                 $(".translate-box").remove();
         }

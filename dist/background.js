@@ -9,11 +9,14 @@ chrome.cookies.onChanged.addListener(function(changeInfo) {
 
 chrome.extension.onRequest.addListener(
     function(request, sender, sendResponse) {
-      console.log(sender.tab ?
-                  "from a content script:" + sender.tab.url :
-                  "from the extension");
-      if (request.greeting == "hello")
-        sendResponse({farewell: "goodbye"});
-      else
-        sendResponse({}); // snub them.
+        console.log(request.isOpen);
+      if (request.isOpen){
+          if(request.type=="change"){
+            localStorage['isOpen']= request.isOpen==1?2:1;
+          }
+        sendResponse({code: 0,isOpen:localStorage['isOpen']});
+      }
+      else{
+          sendResponse({}); 
+      }
     });

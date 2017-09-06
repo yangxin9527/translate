@@ -82,7 +82,7 @@
             float: right;
             line-height: 30px;
         }
-        .isopen {
+        .isOpen {
             margin: 0;
             padding: 0;
             border: none;
@@ -98,15 +98,15 @@
             border-radius: 30px
         }
 
-        .isopen:before,
-        .isopen:after {
+        .isOpen:before,
+        .isOpen:after {
             position: absolute;
             left: 0;
             top: 0;
             content: '';
         }
 
-        .isopen:before {
+        .isOpen:before {
             transition: all 0.4s;
             position: absolute;
             top: 0;
@@ -118,7 +118,7 @@
             border: 2px solid #E5E5E5;
         }
 
-        .isopen:after {
+        .isOpen:after {
             transition: all 0.2s;
             border-radius: 33px;
             top: 2px;
@@ -131,16 +131,16 @@
             -webkit-animation-fill-mode: both;
         }
 
-        .isopen:hover:after {
+        .isOpen:hover:after {
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4), 0px 0px 2px rgba(0, 0, 0, 0.3);
         }
-        .isopen:focus:before {
+        .isOpen:focus:before {
             border: 2px solid #C6C6C6;
         }
-        .isopen:focus {
+        .isOpen:focus {
             outline: none;
         }
-        .isopen:checked:before {
+        .isOpen:checked:before {
             top: 0;
             left: 0;
             right: 0;
@@ -149,11 +149,11 @@
             border-color:#4CD864;
         }
 
-        .isopen:checked:after {
-            -webkit-animation: isopen_after_checked 0.4s;
+        .isOpen:checked:after {
+            -webkit-animation: isOpen_after_checked 0.4s;
             -webkit-animation-fill-mode: both;
         }
-        @-webkit-keyframes isopen_after {
+        @-webkit-keyframes isOpen_after {
             0% {
                 left: 26px;
             }
@@ -162,7 +162,7 @@
             }
         }
 
-        @-webkit-keyframes isopen_after_checked {
+        @-webkit-keyframes isOpen_after_checked {
             0% {
                 left: 2px;
             }
@@ -176,7 +176,7 @@
 <body>
     <button type="button" id="export" class="export-btn">导出Excel</button> 
     <div class="switch">
-        <input id="isopen" class="isopen" type="checkbox" >
+        <input id="isOpen" class="isOpen" type="checkbox" >
         快捷键: alt+T 
     </div>
   

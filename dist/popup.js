@@ -26,6 +26,7 @@ chrome.cookies.onChanged.addListener(function (changeInfo) {
         getTableData();
     }
 });
+
 // 读取localstorage  渲染
 function getTableData() {
     let htmlEle = "";
@@ -80,7 +81,10 @@ document.getElementById("export").onclick = function () {
     tableToExcel('tableExcel')
 }
 
-document.getElementById("isopen").onchange=function(){
-   localStorage["isopen"]=document.getElementById("isopen").checked;
+document.getElementById("isOpen").onchange=function(){
+    
+   localStorage["isOpen"]=document.getElementById("isOpen").checked?1:2;
 }
-
+if(localStorage["isOpen"]==1){
+    document.getElementById("isOpen").checked=true;
+}

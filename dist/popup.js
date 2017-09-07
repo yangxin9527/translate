@@ -1,53 +1,36 @@
-var $cookie = {
-    setCookie: function (c_name, value, expiredays) {
-        var exdate = new Date()
-        exdate.setDate(exdate.getDate() + expiredays)
-        document.cookie = c_name + "=" + escape(value) +
-            ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString())
-    },
-    getCookie: function (c_name) {
-        if (document.cookie.length > 0) {
-            var c_start = document.cookie.indexOf(c_name + "=")
-            if (c_start != -1) {
-                c_start = c_start + c_name.length + 1
-                var c_end = document.cookie.indexOf(";", c_start)
-                if (c_end == -1) c_end = document.cookie.length
-                return unescape(document.cookie.substring(c_start, c_end))
-            }
-        }
-        return ""
-    }
-}
-
-chrome.cookies.onChanged.addListener(function (changeInfo) {
-    console.log(changeInfo)
-    if (changeInfo.cookie.name == "translateJson" && changeInfo.cause == "overwrite") {
-        localStorage.setItem("translateJson", changeInfo.cookie.value);
-        getTableData();
-    }
-});
 
 // 读取localstorage  渲染
 function getTableData() {
-    let htmlEle = "";
+    let wordHtml = "";
+    let sentenceHtml = "";
+    
     for (let i = 0, len = localStorage.length; i < len; i++) {
-        return;
         var itemTime = localStorage.key(i);
+        var newReg = /^[0-9]{13}$/;
+        if(!newReg.test(itemTime)){
+            continue;
+        }
         var itemQuery = JSON.parse(unescape(localStorage.getItem(localStorage.key(i))));
-        console.log(itemQuery);
-        item = "<tr><td>" +
-            itemQuery.query +
-            "</td><td>" +
-            itemQuery.basic.us + itemQuery.basic.uk +
-            "</td><td>" +
-            itemQuery.explains +
-            //translation
-            "<i class='close' flag='" +
-            itemTime +
-            "' ></i></td></tr>"
-        htmlEle += item;
+        if(itemQuery.type==1){
+            //单词
+            wordHtml += `
+            <tr>
+            <td>${itemQuery.query}</td>
+            <td>[英]${itemQuery.us}<br>[美]${itemQuery.uk}</td>
+            <td>${itemQuery.explains}<i class='close' flag='${itemTime}'></i></td></tr>
+            `;
+        }else{
+            //短句
+            sentenceHtml += `
+            <tr>
+            <td>${itemQuery.query}</td>
+            <td>${itemQuery.translation}<i class='close' flag='${itemTime}'></i></td>
+            </tr>
+            `;
+        }
     }
-    document.getElementById("tableExcel").innerHTML = htmlEle;
+    document.getElementById("wordBody").innerHTML = wordHtml;
+    document.getElementById("sentenceBody").innerHTML = sentenceHtml;
     setTimeout(function () {
         var closeEle = document.getElementsByClassName("close");
         for (let i = 0, len = closeEle.length; i < len; i++) {
@@ -78,13 +61,25 @@ var tableToExcel = (function () {
 })()
 
 document.getElementById("export").onclick = function () {
-    tableToExcel('tableExcel')
+    var id = this.getAttribute("flag");
+    tableToExcel(id)
 }
 
 document.getElementById("isOpen").onchange=function(){
-    
-   localStorage["isOpen"]=document.getElementById("isOpen").checked?1:2;
+    localStorage["isOpen"]=document.getElementById("isOpen").checked?1:0;
 }
 if(localStorage["isOpen"]==1){
     document.getElementById("isOpen").checked=true;
+}
+
+document.getElementById("chooseTable").onchange=function(){
+    let tableId = this.value;
+    document.getElementById("export").setAttribute("flag",tableId);
+    if(tableId=="word"){
+        document.getElementById("word").style.display="table"
+        document.getElementById("sentence").style.display="none"
+    }else{
+        document.getElementById("word").style.display="none"
+        document.getElementById("sentence").style.display="table"
+    }
 }

@@ -22,11 +22,11 @@
 var myTrans;
 if (!myTrans) {
     myTrans = {
-        isOpen: 2,
-        changeOpen:function(type){
+        isOpen: 0,
+        config:function(type){
             chrome.extension.sendRequest({isOpen: myTrans.isOpen,type:type?type:""}, function(response) {
-                if(!response.code){
-                    myTrans.isOpen = response.isOpen;
+                if(response){
+                    myTrans.isOpen = response.isOpen;    
                 }
               });
               return myTrans.isOpen;
@@ -69,7 +69,7 @@ if (!myTrans) {
                 return false;
             }
             var youdaoConfig = {
-                url: "http://openapi.youdao.com/api",
+                url: "//openapi.youdao.com/api",
                 appKey: "0a2974b71ca222c7",
                 secretKey: "AIjDPQIao6sg79gSjZHlgbo3KX4M6bNF"
             };
@@ -84,7 +84,6 @@ if (!myTrans) {
                 data: param,
                 success: function (data) {
                     if (data.errorCode == 0) {
-             
                         let addJson = {
                             time:Date.parse(new Date()),
                             data:{
@@ -112,9 +111,12 @@ if (!myTrans) {
                                 addJson.data.explains.push(data.basic.explains[i]);
                             }
                             $div.append($("<ul>").addClass("comment").html(str));
-                            addJson.data.basic.uk = data.basic['uk-phonetic'];
-                            addJson.data.basic.us = data.basic['us-phonetic'];
+                            //type 1 ,2  区分单词或句子
+                            addJson.data.type = "1";
+                            addJson.data.uk = data.basic['uk-phonetic'];
+                            addJson.data.us = data.basic['us-phonetic'];
                         } else if (data.translation) {
+                            addJson.data.type = "2";
                             $div.append($("<div>").addClass("sentence-translation").html(data.translation));
                         }
                         $("body").append($div);
@@ -126,7 +128,6 @@ if (!myTrans) {
                     console.log("error")
                 },
             })
-
         },
         setCookie :function (c_name,value,expiredays)
         {
@@ -153,7 +154,7 @@ if (!myTrans) {
     }
     $(function () {
         $("body").mouseup(function (e) {
-            if (myTrans.changeOpen() !=1) {
+            if (myTrans.config("get")==0) {
                 return false;
             }
             let text = window.getSelection().toString();
@@ -176,21 +177,25 @@ if (!myTrans) {
         }).on("mousedown", ".collect", function (event) {
             event.stopPropagation();
             // console.log("收藏");
-            if(myTrans.getCookie("translateJson")){
-                var translateJson = JSON.parse(myTrans.getCookie("translateJson"));
-            }else{
-                var translateJson=[];
-            }
-            myTrans.setCookie("translateJson",$("#translateInput").val())
+            // if(myTrans.getCookie("translateJson")){
+            //     var translateJson = JSON.parse(myTrans.getCookie("translateJson"));
+            // }else{
+            //     var translateJson=[];
+            // }
+            // myTrans.setCookie("translateJson",$("#translateInput").val())
+            chrome.extension.sendRequest(JSON.parse($("#translateInput").val()), function(response) {
+            
+              });
             setTimeout(function () {
                 $(".translate-box").remove();
             }, 0)
         })
     });
+    //alt+T 开关事件
     document.onkeydown = function () {
         var oEvent = window.event;
         if (oEvent.keyCode == 84 && oEvent.altKey) {
-            myTrans.changeOpen("change");
+            myTrans.config("change");
             if ($(".translate-box"))
                 $(".translate-box").remove();
         }

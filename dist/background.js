@@ -1,22 +1,15 @@
 
-
-chrome.cookies.onChanged.addListener(function(changeInfo) {
-    if(changeInfo.cookie.name=="translateJson" && changeInfo.cause=="overwrite"){
-        var value = JSON.parse(unescape(changeInfo.cookie.value));
-        localStorage.setItem(value.time,JSON.stringify(value.data));
-    }
-});
-
+localStorage['isOpen']=0;
 chrome.extension.onRequest.addListener(
     function(request, sender, sendResponse) {
-        console.log(request.isOpen);
-      if (request.isOpen){
+        if(request.time){
+            localStorage[request.time]=JSON.stringify(request.data);
+            sendResponse({code:0}); 
+        }else{
           if(request.type=="change"){
-            localStorage['isOpen']= request.isOpen==1?2:1;
+            localStorage['isOpen']= request.isOpen==1?0:1;
           }
-        sendResponse({code: 0,isOpen:localStorage['isOpen']});
+        sendResponse({code:0,isOpen:localStorage['isOpen']});
       }
-      else{
-          sendResponse({}); 
-      }
+      
     });

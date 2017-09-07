@@ -1,3 +1,11 @@
+### 效果图
+
+![](https://github.com/yangxin9527/translate/raw/master/result.gif)
+
+![](https://github.com/yangxin9527/translate/raw/master/result2.gif)
+
+
+
 用了一段时间tampermonkey 的 iciba翻译，
 原作者：https://noe132.com。
 
@@ -78,7 +86,3 @@
 
 - 在https下的网站不能运行(已经完成)
 
-### 效果图
-
-![Image]("https://github.com/yangxin9527/translate/raw/master/result.gif")
-![Image]("https://github.com/yangxin9527/translate/raw/master/result2.gif")

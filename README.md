@@ -80,5 +80,5 @@
 
 ### 效果图
 
-![Image]("//github.com/yangxin9527/translate/raw/master/result.gif")
-![Image]("//github.com/yangxin9527/translate/raw/master/result2.gif")
+![Image]("https://github.com/yangxin9527/translate/raw/master/result.gif")
+![Image]("https://github.com/yangxin9527/translate/raw/master/result2.gif")
